@@ -39,20 +39,21 @@ The tagged sentences in the `.csv` training data files must be in this format:
  <START>_START,token_tag,token_tag,token_tag,...token_tag,<END>_END
  ```  
   <br> <br>
-(**OPTIONAL:** Add lists of additional tagged tokens, e.g. numbers, common English words, common verb forms, to the file `trainingset_emissions.csv` to avoid zero-emission probabilities for these token.)  
+*(**OPTIONAL:** Add lists of additional tagged tokens, e.g. numbers, common English words, common verb forms, to the file `trainingset_emissions.csv` to avoid zero-emission probabilities for these token.)*
 <br> <br> <br>
 
 **1b. Preparing the test data**
   
 The test data is a corpus of unseen sentences (25% of the original corpus). Two versions are needed; an untagged version for the model to tag and a manually tagged version to evaluate the success of the model:
-	- `testset.csv`
-	- `testset_answers.csv`
-  <br> 
+- `testset.csv`
+- `testset_answers.csv`
+<br> <br>
+
 The untagged unseen sentences in the `.csv` file must be in this format: 
 ```
-<START>,token,token,token,token,<END>
+<START>,token,token,token,token,<END> 
 ```
-
+<br>
 
 The tagged answer sentences must be in this format: 
 ```
