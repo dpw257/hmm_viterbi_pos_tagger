@@ -57,7 +57,7 @@ The tagged answer sentences must be in this format:
 - Place the files `trainingset_transmissions.csv`, `trainingset_emissions.csv`, and `testset.csv` in the same directory as the `.py` file.
 - Open the Python code `hmm_viterbi_pos_tagger.py` and check that the paths to the training sets are correct. 
 - Check the paths for saving the output `.csv` files is named correctly (i.e. name includes publication dates of corpus texts and unigram/bigram)
-- Run the code to 
+- Run the code to:
 	- Calculate the transition and emission probabilities from your tagged corpus.
 	- Apply the HMM/Viterbi algorithm to tag the test dataset for both unigram and bigram transmissions
 - The tagged sentences are saved in the specified CSV files.
