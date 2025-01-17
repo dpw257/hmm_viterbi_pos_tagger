@@ -2,16 +2,12 @@
 
 ## Project overview
 
-This script implements a **Part-of-Speech (POS) tagger** using unigram and bigram models with the Viterbi algorithm. It calculates transition and emission probabilities from training datasets, applies the Viterbi algorithm to untagged test sentences, and outputs tagged sentences.
-
-This project focuses on developing a part-of-speech (POS) tagger for the Irish language to investigate the syntactical changes in the language over time. The aim is to help inform language policy and investment decisions by analysing the written Irish language across a large time span, providing insights into the impact of English influence on Irish grammar.
+This project develops a **Part-of-Speech (POS) tagger** using a Hidden Markov model with a Viterbi algorithm. It calculates emission and transmission probabilities between unigram and bigram tokens from the training data to tag a diachronic corpus of untagged test sentences from the years 1960 to 2020. This aim of the project is to investigate the syntactical changes in the Irish language over time. 
 
 The main objectives of this project are:
 - **Develop a POS Tagger:** Automatically label tokens in Irish sentences with their grammatical function.
 - **Train on Diachronic Corpus:** Train and test the POS tagger on a corpus of texts from 1960 to 2020.
-- **Analyse Syntactical Changes:** Investigate changes in syntactical features like sentence complexity and verb forms over time.
-
-HMM & Viterbi Algorithm:** Used for part-of-speech tagging and sequence prediction.
+- **Analyse Syntactical Changes:** Investigate changes in two syntactical features (sentence complexity and verb forms).
 
 ---
 
@@ -27,98 +23,64 @@ HMM & Viterbi Algorithm:** Used for part-of-speech tagging and sequence predicti
 ---
 
 ## Usage instructions
+1. **Format of datasets**
 
+- **Preparing the training data**
+The training datasets are a corpus of tagged sentences to calculate emission and transmission probabilities:
+	- trainingset_transmissions.csv
+	- trainingset_emissions.csv
 
-TO RUN THIS POS TAGGER, PLACE YOUR TAGGED CORPUS IN THE SAME FOLDER AS THE JUPYTER NOTEBOOK.
+The tagged sentences in the `.csv` training data files must be in this format:
+```
+<START>_START,token_tag,token_tag,token_tag,...token_tag,<END>_END
+```
 
-THE TAGGED CORPUS MUST BE A CSV FILE. SAVE TWO COPIES OF THE CORPUS RENAMED AS FOLLOWS:
-* trainingset_transmissions.csv
-* trainingset_emissions.csv
+OPTIONAL: Lists of additional tagged tokens may be added to the emission dataset to avoid zero-probabilities of common words, such as verbs or numbers)
+(Optional: Add lists of additional tagged tokens (e.g. numbers, common English words, common verb forms) to the file `trainingset_emissions.csv` to lower the frequency of out of vocabulary tokens (zero-emission probabilities.)
 
-DATA MUST BE SAVED IN THE FOLLOWING FORMAT:
-<START>_START,token_tag,token_tag,token_tag,token_tag,<END>_END
-(OPTIONAL: Lists of additional tagged tokens may be added to the emission dataset to avoid zero-probabilities of common words, such as verbs or numbers)
+- **Testing data**
+The test data is a corpus of unseen sentences (25% of the original corpus). Two versions are needed; an untagged version for the model to tag and a manually tagged version to evaluate the success of the model:
+	- `testset.csv`
+	- `testset_answers.csv`
 
-PLACE YOUR UNTAGGED TEXT IN THE SAME FOLDER AS THE JUPYTER NOTEBOOK.
-RENAME THE FILE AS FOLLOWS:
-* testset.csv
-
-DATA MUST BE SAVED IN THE FOLLOWING FORMAT:
+The untagged unseen sentences in the `.csv` file must be in this format:
+```
 <START>,token,token,token,token,<END>
+```
+
+The tagged answer sentences must be in this format:
+```
+<START>_START,token_tag,token_tag,token_tag,...token_tag,<END>_END
+```
+ 
+2. **Tagging the unseen data**:
+- Place the files `trainingset_transmissions.csv`, `trainingset_emissions.csv`, and `testset.csv` in the same directory as the `.py` file.
+- Open the Python code `hmm_viterbi_pos_tagger.py` and check that the paths to the training sets are correct. 
+- Check the paths for saving the output `.csv` files is named correctly (i.e. name includes publication dates of corpus texts and unigram/bigram)
+- Run the code to 
+	- Calculate the transition and emission probabilities from your tagged corpus.
+	- Apply the HMM/Viterbi algorithm to tag the test dataset for both unigram and bigram transmissions
+- The tagged sentences are saved in the specified CSV files.
+- Run the code for any further data files.
+
+3. **Evaluating the model**
+- Open the Python script `hmm_evaluation.py` and check the variables `decades` (the list of decades used in your corpus) and `file_types` matches the names of your `.csv` files. Three files per time period are needed:
+	- `testset_1960_answers.csv`
+	- `testset_1960_bigrams_tagged.csv`
+	- `testset_1960_unigrams_tagged.csv`
+- Run the code to output performance metrics for the model.
 
 
-
-
-1. **Training Data**:
-   - Two training files must be placed in the same folder as the script:
-     - `trainingset_transmissions.csv`
-     - `trainingset_emissions.csv`
-   - **Format**:
-     ```
-     <START>_START,token1_tag,token2_tag,...,tokenN_tag,<END>_END
-     ```
-
-   - Optional: Add additional tagged tokens (e.g., verbs or numbers) in `trainingset_emissions.csv` to avoid zero probabilities for common tokens.
-
-2. **Test Data**:
-   - An untagged test file named `testset.csv` must be in the same folder.
-   - **Format**:
-     ```
-     <START>,token1,token2,...,tokenN,<END>
-     ```
-
----
-
-## Outputs
-
-- **Tagged Sentences**:
-  - `testset_tagged_with_unigrams.csv`: Tagged sentences using the unigram model.
-  - `testset_tagged_with_bigrams.csv`: Tagged sentences using the bigram model.
-
-- **Data Tables**:
-  - Transition and emission probabilities are printed as dataframes for debugging or visualization.
-
----
-
-## How to Run
-
-1. **Prepare Training and Test Data**:
-   - Place the files `trainingset_transmissions.csv`, `trainingset_emissions.csv`, and `testset.csv` in the same directory as the script.
-
-2. **Run the Script**:
-   - Use Python to execute the script. It will:
-     - Parse training data to calculate transition and emission probabilities.
-     - Apply the Viterbi algorithm to tag the test dataset.
-
-3. **Check Outputs**:
-   - The tagged sentences are saved in the specified CSV files.
-
----
-
-## Implementation Details
-
-### 1. Training Data Parsing
-
-- Parses training datasets (`trainingset_transmissions.csv` and `trainingset_emissions.csv`) into:
-  - **Transition Probabilities**:
-    - Unigram transitions: Probability of a tag being followed by another tag.
-    - Bigram transitions: Probability of a tag pair being followed by another tag.
-  - **Emission Probabilities**:
-    - Probability of a word being tagged with a specific POS.
-
-### 2. Test Data Parsing
-
-- Parses untagged test sentences from `testset.csv`.
 
 
 
 ---
 
 ## Performance metrics
-- **Accuracy:** Overall accuracy and accuracy per decade.
-- **Precision, Recall, and F-Score:** Evaluated for individual verb tags, complexity markers, and the overall model.
-- Analysis was conducted using both unigram and bigram transmission probabilities.
-
+- All analyses were conducted for both **unigram and bigram** transmission probabilities.
+- **Accuracy** calculated per decade and for the model overall.
+- **Precision, Recall and F-Score** of individual verb tags, individual syntax tags and the model overall.
+- **Confusion matrices** for syntax marker tags and verb form tags.
 
 ---
 
