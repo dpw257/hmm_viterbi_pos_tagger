@@ -39,7 +39,7 @@ The tagged sentences in the `.csv` training data files must be in this format:
  <START>_START,token_tag,token_tag,token_tag,...token_tag,<END>_END
  ```  
   <br> <br>
-(OPTIONAL: Add lists of additional tagged tokens, e.g. numbers, common English words, common verb forms, to the file `trainingset_emissions.csv` to avoid zero-emission probabilities for these token.)  
+(**OPTIONAL:** Add lists of additional tagged tokens, e.g. numbers, common English words, common verb forms, to the file `trainingset_emissions.csv` to avoid zero-emission probabilities for these token.)  
 <br> <br> <br>
 
 **1b. Preparing the test data**
