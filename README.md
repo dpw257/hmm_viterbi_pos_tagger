@@ -60,7 +60,7 @@ The tagged answer sentences must be in this format:
 <START>_START,token_tag,token_tag,token_tag,...token_tag,<END>_END
 ```  
 	
-<br> <br> <br> 
+<br> <br> 
 
 ### 2. Tagging the unseen data
 - Place the files `trainingset_transmissions.csv`, `trainingset_emissions.csv`, and `testset.csv` in the same directory as the `.py` file.
@@ -72,7 +72,7 @@ The tagged answer sentences must be in this format:
 - The tagged sentences are saved in the specified `.csv` files.
 - Run the code again for any further data files (i.e. corpus files from different time periods).  
 
-<br> <br> <br> 
+<br> <br> 
 
 ### 3. Evaluating the model
 - Open the Python script `hmm_evaluation.py` and check the variables `decades` (the list of decades used in your corpus) and `file_types` matches the names of your `.csv` files. Three files per time period are needed:
