@@ -61,7 +61,7 @@ The tagged answer sentences must be in this format:
 	- Calculate the transition and emission probabilities from your tagged corpus.
 	- Apply the HMM/Viterbi algorithm to tag the test dataset for both unigram and bigram transmissions
 - The tagged sentences are saved in the specified CSV files.
-- Run the code for any further data files.
+- Run the code again for any further data files (i.e. corpus files from different time periods).
 
 3. **Evaluating the model**
 - Open the Python script `hmm_evaluation.py` and check the variables `decades` (the list of decades used in your corpus) and `file_types` matches the names of your `.csv` files. Three files per time period are needed:
